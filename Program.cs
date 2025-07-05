@@ -7,8 +7,7 @@ namespace TaskManager
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
-/*            builder.Services.AddDbContext<PersonContext>(options => options.UseSqlServer("Server=AIDA\\SQLEXPRESS;Database=IntroductionToAsp;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False;"));
-*/
+
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
