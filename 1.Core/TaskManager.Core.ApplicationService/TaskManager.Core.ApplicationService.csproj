@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Core.Contracts\TaskManager.Core.Contracts.csproj" />
+    <ProjectReference Include="..\TaskManager.Core.Domain\TaskManager.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

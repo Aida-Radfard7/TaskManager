@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.Core\TaskManager.Core.ApplicationService\TaskManager.Core.ApplicationService.csproj" />
+    <ProjectReference Include="..\..\1.Core\TaskManager.Core.Contracts\TaskManager.Core.Contracts.csproj" />
+    <ProjectReference Include="..\..\1.Core\TaskManager.Core.Domain\TaskManager.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\2.Infra\Data\TaskManager.Infra.Data.EF.SqlServer\TaskManager.Infra.Data.EF.SqlServer.csproj" />
+  </ItemGroup>
+
+</Project>
