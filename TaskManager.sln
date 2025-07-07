@@ -29,6 +29,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Core.Domain", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskManager.Core.Domain", "TaskManager.Core.Domain", "{EFB08CF2-E4BC-44F5-B678-670A5BDD4EDE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{193ADCD0-96C5-46AE-A67D-5890925EF43D}"
+	ProjectSection(SolutionItems) = preProject
+		2.Infra\Data\TaskManager.Infra.Data.EF.SqlServer\TaskRepository.cs = 2.Infra\Data\TaskManager.Infra.Data.EF.SqlServer\TaskRepository.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,5 +75,6 @@ Global
 		{3CA475C6-A775-4F41-AFF9-315E51E01E21} = {57E75B4D-20CC-45C7-BB37-E02FEB5C64DD}
 		{859C6267-9A2B-400F-A3D0-F677223899C9} = {EFB08CF2-E4BC-44F5-B678-670A5BDD4EDE}
 		{EFB08CF2-E4BC-44F5-B678-670A5BDD4EDE} = {03504891-CBC5-4718-B4EC-BB7732849A5A}
+		{193ADCD0-96C5-46AE-A67D-5890925EF43D} = {3CA475C6-A775-4F41-AFF9-315E51E01E21}
 	EndGlobalSection
 EndGlobal

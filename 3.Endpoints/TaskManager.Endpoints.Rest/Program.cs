@@ -14,8 +14,9 @@ namespace TaskManager.Endpoints.Rest
         {
             var builder = WebApplication.CreateBuilder(args);
         
-            builder.Services.AddDbContext<TaskDbContext>(options => options.UseSqlServer("Server=AIDA\\SQLEXPRESS;Database=TaskManagerNikamooz;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False;"));
-
+            builder.Services.AddDbContext<TaskDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
             builder.Services.AddScoped<ITaskService, TaskService>();
 
