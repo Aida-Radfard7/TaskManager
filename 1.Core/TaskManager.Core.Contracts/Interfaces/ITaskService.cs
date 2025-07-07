@@ -10,8 +10,8 @@ namespace TaskManager.Core.Contracts.Interfaces
 {
     public interface ITaskService
     {
-        Task<List<TaskItem>> GetAllAsync();
-        Task AddAsync(TaskItem newTask);
+        Task<List<TaskItemDto>> GetAllAsync();
+        Task AddAsync(TaskItemDto newTask);
         Task MarkAsDoneAsync(int id);
         Task CancelAsync(int id);
     }

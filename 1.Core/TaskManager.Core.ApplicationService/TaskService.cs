@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TaskManager.Core.Contracts.Dtos;
 using TaskManager.Core.Contracts.Interfaces;
 using TaskManager.Core.Domain.Entities;
@@ -10,7 +11,7 @@ using TaskManager.Core.Domain.Repositories;
 
 namespace TaskManager.Core.ApplicationService
 {
-    public class TaskService: ITaskService
+    public class TaskService : ITaskService
     {
         private readonly ITaskRepository _repository;
 
@@ -18,9 +19,20 @@ namespace TaskManager.Core.ApplicationService
         {
             _repository = repository;
         }
-        public async Task<List<TaskItem>> GetAllAsync() => await _repository.GetAllAsync();
+        public async Task<List<TaskItemDto>> GetAllAsync()
+        {
+            var tasks = await _repository.GetAllAsync();
+            return tasks.Select(task => new TaskItemDto
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                DueDate = task.DueDate,
+                Status = task.Status.ToString()
+            }).ToList();
+        }
 
-        public async Task AddAsync(TaskItem newTask)
+        public async Task AddAsync(TaskItemDto newTask)
         {
             var task = new TaskItem
             {

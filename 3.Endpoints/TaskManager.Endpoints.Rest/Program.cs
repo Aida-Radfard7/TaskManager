@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using TaskManager.Core.ApplicationService;
+using TaskManager.Core.Contracts.Dtos;
 using TaskManager.Core.Contracts.Interfaces;
 using TaskManager.Core.Domain.Entities;
 using TaskManager.Core.Domain.Repositories;
@@ -42,11 +43,11 @@ namespace TaskManager.Endpoints.Rest
                 }
                 else if (context.Request.Method == "POST")
                 {
-                    if (context.Request.Path.StartsWithSegments("/tasks"))
+                    if (context.Request.Path.StartsWithSegments("/addTask"))
                     {
                         StreamReader streamReader = new StreamReader(context.Request.Body);
                         string body = await streamReader.ReadToEndAsync();
-                        TaskItem task = JsonSerializer.Deserialize<TaskItem>(body);
+                        TaskItemDto task = JsonSerializer.Deserialize<TaskItemDto>(body);
                         if (task != null)
                         {
                             await taskService.AddAsync(task);
@@ -59,7 +60,7 @@ namespace TaskManager.Endpoints.Rest
                 }
                 else if (context.Request.Method == "PUT")
                 {
-                    if (context.Request.Path.StartsWithSegments("/cancel"))
+                    if (context.Request.Path.StartsWithSegments("/cancelTask"))
                     {
                         if (context.Request.Query.Keys.Contains("Id"))
                         {
@@ -71,7 +72,7 @@ namespace TaskManager.Endpoints.Rest
                             context.Response.StatusCode = 400;
                         }
                     }
-                    if (context.Request.Path.StartsWithSegments("/done"))
+                    if (context.Request.Path.StartsWithSegments("/doneTask"))
                     {
                         if (context.Request.Query.Keys.Contains("Id"))
                         {
