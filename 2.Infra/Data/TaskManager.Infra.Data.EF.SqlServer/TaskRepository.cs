@@ -21,7 +21,7 @@ namespace TaskManager.Infra.Data.EF.SqlServer
         }
 
         public async Task<List<TaskItem>> GetAllAsync() {
-            List<TaskItem> taskLst =  await _context.Tasks.OrderBy(t => t.DueDate).ToListAsync();
+            List<TaskItem> taskLst =  await _context.Tasks.OrderBy(t => t.Id).ToListAsync();
             return taskLst;
         }
 
@@ -30,7 +30,6 @@ namespace TaskManager.Infra.Data.EF.SqlServer
             await _context.SaveChangesAsync();
         }
        
-
         public async Task UpdateStatusAsync(int id, TaskStatusEnum status) {
             var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task == null) return;

@@ -30,75 +30,60 @@ namespace TaskManager.Endpoints.Rest
                 {
                     if (context.Request.Path.StartsWithSegments("/"))
                     {
-                        context.Response.StatusCode = 200;
-                        await context.Response.WriteAsync($"{context.Request.Method}\r\n");
-                        await context.Response.WriteAsync($"{context.Request.Path}\r\n");
-                        foreach (var item in context.Request.Headers)
-                        {
-                            await context.Response.WriteAsync($"Key:{item.Key} Value:{item.Value}\r\n");
-                        }
-                    }
-                    else if (context.Request.Path.StartsWithSegments("/tasks"))
-                    {
                         context.Response.ContentType = "text/html";
-                        await context.Response.WriteAsync($"{context.Request.Method}<br/>");
-                        await context.Response.WriteAsync($"{context.Request.Path}<br/>");
                         var tasks = await taskService.GetAllAsync();
                         foreach (var task in tasks)
                         {
-                            await context.Response.WriteAsync($"Id:{task.Id}");
+                            await context.Response.WriteAsync($"{task.Id} : Title:{task.Title} - Description:{task.Description}<br/><br/>");
 
-                        }
-                        context.Response.StatusCode = 200;
-                    }
-                    else if (context.Request.Method == "POST")
-                    {
-                        if (context.Request.Path.StartsWithSegments("/tasks"))
-                        {
-                            StreamReader streamReader = new StreamReader(context.Request.Body);
-                            string body = await streamReader.ReadToEndAsync();
-                            TaskItem task = JsonSerializer.Deserialize<TaskItem>(body);
-                            if (task != null)
-                            {
-                                taskService.AddAsync(task);
-                                context.Response.StatusCode = 200;
-                            }
-                            else
-                            {
-                                context.Response.StatusCode = 400;
-                            }
-                        }
-                    }
-                    else if (context.Request.Method == "PUT")
-                    {
-                        if (context.Request.Path.StartsWithSegments("/cancel-task"))
-                        {
-                            if (context.Request.Query.Keys.Contains("Id"))
-                            {
-                                int id = int.Parse(context.Request.Query["Id"]);
-                                taskService.CancelAsync(id);
-                                context.Response.StatusCode = 200;
-                            }
-                            else
-                            {
-                                context.Response.StatusCode = 400;
-                            }
-                        }
-                        if (context.Request.Path.StartsWithSegments("/done-task"))
-                        {
-                            if (context.Request.Query.Keys.Contains("Id"))
-                            {
-                                int id = int.Parse(context.Request.Query["Id"]);
-                                taskService.MarkAsDoneAsync(id);
-                                context.Response.StatusCode = 200;
-                            }
-                            else
-                            {
-                                context.Response.StatusCode = 400;
-                            }
                         }
                     }
                 }
+                else if (context.Request.Method == "POST")
+                {
+                    if (context.Request.Path.StartsWithSegments("/tasks"))
+                    {
+                        StreamReader streamReader = new StreamReader(context.Request.Body);
+                        string body = await streamReader.ReadToEndAsync();
+                        TaskItem task = JsonSerializer.Deserialize<TaskItem>(body);
+                        if (task != null)
+                        {
+                            await taskService.AddAsync(task);
+                        }
+                        else
+                        {
+                            context.Response.StatusCode = 400;
+                        }
+                    }
+                }
+                else if (context.Request.Method == "PUT")
+                {
+                    if (context.Request.Path.StartsWithSegments("/cancel"))
+                    {
+                        if (context.Request.Query.Keys.Contains("Id"))
+                        {
+                            int id = int.Parse(context.Request.Query["Id"]);
+                            await taskService.CancelAsync(id);
+                        }
+                        else
+                        {
+                            context.Response.StatusCode = 400;
+                        }
+                    }
+                    if (context.Request.Path.StartsWithSegments("/done"))
+                    {
+                        if (context.Request.Query.Keys.Contains("Id"))
+                        {
+                            int id = int.Parse(context.Request.Query["Id"]);
+                            await taskService.MarkAsDoneAsync(id);
+                        }
+                        else
+                        {
+                           context.Response.StatusCode = 400;
+                        }
+                    }
+                }
+                
             });
 
             app.Run();
