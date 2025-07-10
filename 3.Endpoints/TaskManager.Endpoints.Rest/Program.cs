@@ -6,6 +6,7 @@ using TaskManager.Core.Contracts.Interfaces;
 using TaskManager.Core.Domain.Entities;
 using TaskManager.Core.Domain.Repositories;
 using TaskManager.Infra.Data.EF.SqlServer;
+using TaskManager.Infra.Data.EF.SqlServer.Repositories;
 
 namespace TaskManager.Endpoints.Rest
 {
