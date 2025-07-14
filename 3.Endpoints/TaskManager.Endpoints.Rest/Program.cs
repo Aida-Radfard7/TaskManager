@@ -5,6 +5,7 @@ using TaskManager.Core.Contracts.Dtos;
 using TaskManager.Core.Contracts.Interfaces;
 using TaskManager.Core.Domain.Entities;
 using TaskManager.Core.Domain.Repositories;
+using TaskManager.Endpoints.Rest.Middlewares;
 using TaskManager.Infra.Data.EF.SqlServer;
 using TaskManager.Infra.Data.EF.SqlServer.Repositories;
 
@@ -21,10 +22,11 @@ namespace TaskManager.Endpoints.Rest
             
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
             builder.Services.AddScoped<ITaskService, TaskService>();
+            builder.Services.AddScoped<IRequestLogRepository, RequestLogRepository>();
 
             var app = builder.Build();
 
-
+            app.UseMiddleware<RequestLogMiddleware>();
             app.Run(async (context) =>
             {
                 var taskService = context.RequestServices.GetRequiredService<ITaskService>();

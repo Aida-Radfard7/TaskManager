@@ -13,6 +13,8 @@ namespace TaskManager.Infra.Data.EF.SqlServer
         public TaskDbContext(DbContextOptions<TaskDbContext> options):base(options) {}
 
         public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<RequestLog> RequestLogs { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,10 @@ namespace TaskManager.Infra.Data.EF.SqlServer
                     .IsRequired()
                     .HasMaxLength(100);
                 entity.Property(entity => entity.Status).IsRequired();
+            });
+            modelBuilder.Entity<RequestLog>(entity =>
+            {
+                entity.HasKey(entity => entity.Id);
             });
         }
     }
