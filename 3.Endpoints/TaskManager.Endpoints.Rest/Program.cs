@@ -24,10 +24,15 @@ namespace TaskManager.Endpoints.Rest
             builder.Services.AddScoped<ITaskService, TaskService>();
             builder.Services.AddScoped<IRequestLogRepository, RequestLogRepository>();
 
+            builder.Services.Configure<RouteOptions>(options =>
+            {
+                options.ConstraintMap.Add("nationalCode", typeof(CustomConstraints.NationalCodeConstraint));
+            });
+
             var app = builder.Build();
 
             app.UseMiddleware<RequestLogMiddleware>();
-            app.Run(async (context) =>
+            /*app.Run(async (context) =>
             {
                 var taskService = context.RequestServices.GetRequiredService<ITaskService>();
 
@@ -89,6 +94,13 @@ namespace TaskManager.Endpoints.Rest
                     }
                 }
                 
+            });*/
+
+            app.UseRouting();
+            app.MapGet("{nationalCode:nationalCode}", async context =>
+            {
+                context.Response.ContentType = "text/html";
+                await context.Response.WriteAsync("national code is valid");
             });
 
             app.Run();
